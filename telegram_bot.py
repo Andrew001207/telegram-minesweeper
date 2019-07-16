@@ -9,6 +9,7 @@ from PIL import Image
 from matplotlib import cm
 from io import BytesIO
 import cv2
+import os
 
 import logging
 
@@ -38,12 +39,12 @@ def field(update, context, x, y, n):
     # cv2.imshow('Dimas', imager.get_image(game[str(update.message.chat_id)].mask))
     # cv2.waitKey(0)
     # cv2.destroyAllWindows()
-    cv2.imwrite(str(update.message.chat_id) + '.png',imager.get_image(game[str(update.message.chat_id)].mask))
+    cv2.imwrite('images/' +  str(update.message.chat_id) + '.png',imager.get_image(game[str(update.message.chat_id)].mask))
     #im = Image.fromarray(imager.get_image(game[str(update.message.chat_id)].mask))
     # bio.name = 'image.jpeg'
     # im.save(bio, 'JPEG')
     # bio.seek(0)
-    context.bot.send_photo(update.message.chat_id, open(str(update.message.chat_id) + '.png', 'rb'))
+    context.bot.send_photo(update.message.chat_id, open('images/' + str(update.message.chat_id) + '.png', 'rb'))
 
     # msg = ''.join(''.join(str(mine) + ' ' for mine in line) + '\n' for line in game[str(update.message.chat_id)].mask)
     # context.bot.send_message(chat_id=update.message.chat_id, text = msg)
@@ -69,8 +70,8 @@ def coo(update, context):
     # cv2.waitKey(0)
     # cv2.destroyAllWindows()
 
-    cv2.imwrite(str(update.message.chat_id) + '.png',imager.get_image(game[str(update.message.chat_id)].mask))
-    context.bot.send_photo(update.message.chat_id, open(str(update.message.chat_id) + '.png', 'rb'))
+    cv2.imwrite('images/' +  str(update.message.chat_id) + '.png',imager.get_image(game[str(update.message.chat_id)].mask))
+    context.bot.send_photo(update.message.chat_id, open('images/' + str(update.message.chat_id) + '.png', 'rb'))
     # msg = ''.join(''.join(str(mine) + ' ' for mine in line) + '\n' for line in game[str(update.message.chat_id)].mask)
     # context.bot.send_message(chat_id=update.message.chat_id, text = msg)
     state = game[str(update.message.chat_id)].check_victory()
@@ -97,7 +98,10 @@ def keyboard(update, context):
         coo(update, context)
 
 def main():
-    updater = Updater(token='TOKEN', use_context=True)
+    from bot_token import get_token
+    TOKEN = os.getenv("TOKEN")
+    print('{} - Token'.format(TOKEN))
+    updater = Updater(mode = os.getenv("TOKEN"), use_context=True)
     dispatcher = updater.dispatcher
     logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
     start_handler = CommandHandler('start', start)
