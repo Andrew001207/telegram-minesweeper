@@ -1,5 +1,7 @@
 import mines
 
+#Vledz Komment
+
 s_size = input()
 x, y, num_mines = s_size.split(' ')
 x = int(x)
