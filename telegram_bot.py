@@ -99,8 +99,13 @@ def keyboard(update, context):
 
 def main():
     TOKEN = os.getenv("TOKEN")
-    print('{} - Token'.format(TOKEN))
+    PORT = int(os.environ.get("PORT", "8443"))
     updater = Updater(token=os.getenv("TOKEN"), use_context=True)
+    updater.start_webhook(listen="0.0.0.0",
+                              port=PORT,
+                              url_path=TOKEN)
+    updater.bot.set_webhook("https://{}.herokuapp.com/{}".format('mineswot-bot', TOKEN))
+    print('Started on 8443')
     dispatcher = updater.dispatcher
     logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
     start_handler = CommandHandler('start', start)
