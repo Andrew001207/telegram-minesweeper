@@ -1,2 +1,6 @@
 __pycache__*
-token.py
+bot_token*
+.vscode/
+images/
+token.pyc
+

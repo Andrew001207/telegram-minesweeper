@@ -98,10 +98,9 @@ def keyboard(update, context):
         coo(update, context)
 
 def main():
-    from bot_token import get_token
     TOKEN = os.getenv("TOKEN")
     print('{} - Token'.format(TOKEN))
-    updater = Updater(mode = os.getenv("TOKEN"), use_context=True)
+    updater = Updater(token=os.getenv("TOKEN"), use_context=True)
     dispatcher = updater.dispatcher
     logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
     start_handler = CommandHandler('start', start)
